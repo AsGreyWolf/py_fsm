@@ -1,6 +1,5 @@
 from enum import Enum
 from collections import defaultdict
-from itertools import tee
 
 class Peeker:
 	def __init__(self, it):
@@ -77,7 +76,7 @@ class Machine:
 		self.E = State('E')
 		self.on_enter = on_enter
 		self.on_leave = on_leave
-		self.mapping = mapping if mapping is not None else {}
+		self.mapping = defaultdict(dict, mapping if mapping is not None else {})
 		self.submachines = {}
 		self.state = self.S
 
@@ -95,8 +94,6 @@ class Machine:
 		self.F.on_enter = value
 
 	def append(self, state, trans):
-		if state not in self.mapping:
-			self.mapping[state] = {}
 		self.mapping[state][trans.key] = trans
 
 	def step_char(self, peeker):

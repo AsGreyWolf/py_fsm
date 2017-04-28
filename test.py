@@ -144,19 +144,13 @@ def process(_text):
 				w.set_error(ex.start, ex.end)
 			else:
 				w.set_status('Success')
-			semantics_str = 'Identifiers:\n'
-			for idn in set(x for x, start, end in idns):
-				semantics_str += idn
-				semantics_str += '\n'
-			semantics_str += 'Constants:\n'
-			for const in set(x for x, start, end in consts):
-				semantics_str += const
-				semantics_str += '\n'
-			semantics_str += 'Float constants:\n'
-			for const in set(x for x, start, end in consts_any):
-				semantics_str += const
-				semantics_str += '\n'
-			w.set_semantics(semantics_str)
+			lines = ['Identifiers:']
+			lines += set(x for x, start, end in idns)
+			lines += ['Constants:']
+			lines += set(x for x, start, end in consts)
+			lines += ['Float constants:']
+			lines += set(x for x, start, end in consts_any)
+			w.set_semantics('\n'.join(lines))
 		elif state == main.F:
 			w.set_status(str(SyntaxError(peeker.pos, ['NOTHING'])))
 			w.set_error(peeker.pos)
