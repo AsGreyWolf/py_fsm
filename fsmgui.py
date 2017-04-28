@@ -5,7 +5,7 @@ class Window(tk.Tk):
 		super().__init__()
 		self.title('6) REPEAT <оператор присваивания> UNTIL <условие>;')
 		self.input = tk.Text(self)
-		self.input.grid(row = 0, column = 0, rowspan = 3, sticky='nswe')
+		self.input.grid(row=0, column=0, rowspan=3, sticky='nswe')
 		self.input.tag_config("err", background="red", foreground="white")
 		# self.input.bind("<Button-1>",  lambda x: self.setError(-1))
 		self.input.bind("<KeyRelease>",  lambda x: callback(self.text()))
@@ -14,9 +14,9 @@ class Window(tk.Tk):
 		self.status = tk.StringVar()
 		self.status.set('Status:')
 		self.statusw = tk.Label(self, textvariable=self.status, justify=tk.LEFT)
-		self.statusw.grid(row = 0, column = 1, sticky='nw')
-		self.textview = tk.Text(self, state=tk.DISABLED, width = 20)
-		self.textview.grid(row = 1, column = 1, sticky='nswe')
+		self.statusw.grid(row=0, column=1, sticky='nw')
+		self.textview = tk.Text(self, state=tk.DISABLED, width=20)
+		self.textview.grid(row=1, column=1, sticky='nswe')
 		tk.Grid.columnconfigure(self, 0, weight=30)
 		tk.Grid.columnconfigure(self, 1, weight=1)
 		tk.Grid.rowconfigure(self, 0, weight=1)
@@ -33,7 +33,7 @@ class Window(tk.Tk):
 		self.textview.delete(1.0, tk.END)
 		self.textview.insert(tk.END, semantics)
 		self.textview['state'] = tk.DISABLED
-	def set_error(self, pos, end_pos = -1):
+	def set_error(self, pos, end_pos=-1):
 		self.input.tag_remove('err', 1.0, tk.END)
 		if pos >= 0:
 			end = tk.END

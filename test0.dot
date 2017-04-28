@@ -1,0 +1,190 @@
+digraph repeat_gr {
+	S->1[label="REPEAT"];
+	1->r1[label="разделитель"];
+	r1->2[label="оп_присв"];
+	2->3[label="UNTIL"];
+	3->r3[label="разделитель"];
+	r3->4[label="условие"];
+	4->F[label=";"];
+}
+digraph оп_присв_gr {
+	S->1[label="лев_ч"];
+	1->r1[label="разделитель"];
+	r1->2[label=":"];
+	1->2[label=":"];
+	2->3[label="="];
+	3->r3[label="разделитель"];
+	r3->F[label="прав_ч"];
+	3->F[label="прав_ч"];
+}
+digraph условие_gr {
+	S->F[label="отношение"];
+	S->1[label="("];
+	1->r1[label="разделитель"];
+	r1->2[label="отношение"];
+	1->2[label="отношение"];
+	2->3[label=")"];
+	3->r3[label="разделитель"];
+	r3->4[label="логич_оп"];
+	3->4[label="логич_оп"];
+	4->r4[label="разделитель"];
+	r4->5[label="("];
+	4->5[label="("];
+	5->r5[label="разделитель"];
+	5->6[label="отношение"];
+	r5->6[label="отношение"];
+	6->7[label=")"];
+	7->F[label="разделитель"];
+	7->F[label="⊥"];
+	r3->F[label="⊥"];
+	3->F[label="⊥"];
+}
+digraph лев_ч_gr {
+	S->1[label="идентификатор"];
+	1->2[label="["];
+	2->r2[label="разделитель"];
+	r2->3[label="константа"];
+	2->3[label="константа"];
+	r2->3[label="идентификатор"];
+	2->3[label="идентификатор"];
+	3->r3[label="разделитель"];
+	r3->F[label="]"];
+	3->F[label="]"];
+	1->F[label="⊥"];
+}
+digraph прав_ч_gr {
+	S->1[label="операнд"];
+	1->3[label="разделитель"];
+	3->4[label="+|-|*|/"];
+	4->2[label="разделитель"];
+	1->4[label="+|-|*|/"];
+	3->5[label="DIV|MOD"];
+	5->2[label="разделитель"];
+	4->6[label="операнд"];
+	2->6[label="операнд"];
+	3->F[label="⊥"];
+	6->F[label="разделитель"];
+}
+digraph отношение_gr {
+	S->1[label="операнд"];
+	1->r1[label="разделитель"];
+	r1->2[label="отношения_оп"];
+	1->2[label="отношения_оп"];
+	2->r2[label="разделитель"];
+	r2->3[label="операнд"];
+	2->3[label="операнд"];
+	3->F[label="разделитель"];
+	3->F[label="⊥"];
+	1->F[label="⊥"];
+	r1->F[label="⊥"];
+}
+digraph идентификатор_gr {
+	S->1[label="буква"];
+	S->1[label="_"];
+	1->1[label="буква"];
+	1->1[label="цифра"];
+	1->1[label="_"];
+	1->F[label="⊥"];
+}
+digraph константа_gr {
+	S->1[label="1|..|9"];
+	S->2[label="-"];
+	2->1[label="1|..|9"];
+	1->1[label="цифра"];
+	1->F[label="⊥"];
+	S->F[label="0"];
+}
+digraph операнд_gr {
+	S->F[label="константа_любая"];
+	S->1[label="идентификатор"];
+	1->2[label="["];
+	2->r2[label="разделитель"];
+	r2->3[label="константа"];
+	2->3[label="константа"];
+	r2->3[label="идентификатор"];
+	2->3[label="идентификатор"];
+	3->r3[label="разделитель"];
+	r3->F[label="]"];
+	3->F[label="]"];
+	1->F[label="⊥"];
+}
+digraph константа_любая_gr {
+	S->1[label="1|..|9"];
+	S->3[label="-"];
+	3->1[label="1|..|9"];
+	1->1[label="цифра"];
+	2->5[label="цифра"];
+	5->5[label="цифра"];
+	1->F[label="⊥"];
+	5->F[label="⊥"];
+	S->6[label="0"];
+	6->F[label="⊥"];
+	4->2[label="."];
+	1->2[label="."];
+	6->2[label="."];
+	3->4[label="0"];
+}
+digraph логич_оп_gr {
+	S->F[label="AND|OR|XOR"];
+}
+digraph отношения_оп_gr {
+	S->F[label="="];
+	S->1[label="<"];
+	1->F[label="="];
+	1->F[label=">"];
+	1->F[label="⊥"];
+	S->2[label=">"];
+	2->F[label="="];
+	2->F[label="⊥"];
+}
+digraph разделитель_gr {
+	S->1[label=" "];
+	1->1[label=" "];
+	1->F[label="⊥"];
+}
+digraph буква_gr {
+	S->F[label="a|..|z"];
+	S->F[label="A|..|Z"];
+}
+digraph цифра_gr {
+	S->F[label="0|..|9"];
+}
+digraph REPEAT_gr {
+	S->1[label="R"];
+	1->2[label="E"];
+	2->3[label="P"];
+	3->4[label="E"];
+	4->5[label="A"];
+	5->F[label="T"];
+}
+digraph UNTIL_gr {
+	S->1[label="U"];
+	1->2[label="N"];
+	2->3[label="T"];
+	3->4[label="I"];
+	4->F[label="L"];
+}
+digraph DIV_gr {
+	S->1[label="D"];
+	1->2[label="I"];
+	2->F[label="V"];
+}
+digraph MOD_gr {
+	S->1[label="M"];
+	1->2[label="O"];
+	2->F[label="D"];
+}
+digraph AND_gr {
+	S->1[label="A"];
+	1->2[label="N"];
+	2->F[label="D"];
+}
+digraph OR_gr {
+	S->1[label="O"];
+	1->F[label="R"];
+}
+digraph XOR_gr {
+	S->1[label="X"];
+	1->2[label="O"];
+	2->F[label="R"];
+}

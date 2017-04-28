@@ -3,6 +3,17 @@ import re
 digr = re.compile('digraph (\w+)_gr\W*{([^}]*)}')
 it = re.compile('(\S+)->(\S+)\[label=\"([^\"]+)\"\]')
 
+def fill_chars(chars):
+	prev = '_'
+	for i, char in enumerate(chars):
+		if char == '..':
+			start = ord(chars[i - 1]) + 1
+			end = ord(chars[i + 1])
+			for pos in range(start, end):
+				yield chr(pos)
+		else:
+			yield char
+
 def load_mapping(data):
 	mapping = {}
 	for name, content in digr.findall(data):
@@ -10,15 +21,7 @@ def load_mapping(data):
 		for parent, child, char_list in it.findall(content):
 			if parent not in mapping[name]:
 				mapping[name][parent] = {}
-			chars = char_list.split('|')
-			for i, char in enumerate(chars):
-				if char == '..':
-					start = ord(chars[i - 1]) + 1
-					end = ord(chars[i + 1])
-					for pos in range(start, end):
-						mapping[name][parent][chr(pos)] = child
-				else:
-					mapping[name][parent][char] = child
+			mapping[name][parent][char_list] = child
 	# print('Loaded mapping ' + str(mapping))
 	return mapping
 
@@ -44,10 +47,11 @@ def generate(mapping):
 		mach = final.Machine(graph_name)
 		for parent, value in graph.items():
 			parent = state_name_to_state(parent, mach, states)
-			for char, child in value.items():
+			for char_list, child in value.items():
 				child = state_name_to_state(child, mach, states)
-				trans = final.Transition(char, child)
-				mach.append(parent, trans)
+				for char in fill_chars(char_list.split('|')):
+					trans = final.Transition(char, child)
+					mach.append(parent, trans)
 		result[graph_name] = mach
 	return result
 
