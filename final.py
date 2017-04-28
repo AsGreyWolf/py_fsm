@@ -149,4 +149,4 @@ class Machine:
 	def __str__(self):
 		return '<Machine %s>' % self.name
 	def __repr__(self):
-		return 'Machine(%r, %r, %r, %r, {...%s elements...})' % (self.name, self.on_enter, self.on_leave, len(self.mapping))
+		return 'Machine(%r, %r, %r, {...%s elements...})' % (self.name, self.on_enter, self.on_leave, len(self.mapping))

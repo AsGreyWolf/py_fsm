@@ -50,6 +50,8 @@ def generate(mapping):
 			for char_list, child in value.items():
 				child = state_name_to_state(child, mach, states)
 				for char in fill_chars(char_list.split('|')):
+					if char[0] == '<':
+						char = char[1:-1]
 					trans = final.Transition(char, child)
 					mach.append(parent, trans)
 		result[graph_name] = mach
